@@ -2,7 +2,7 @@
 num_layers: 4
 kernel_size: 3
 stride: 1
-num_filters: 16
+num_filters: 4
 #
 num_batch: 64
 trainer:
