@@ -14,18 +14,17 @@ np.set_printoptions(precision=3, suppress=True)
 
 def main(config:dict, checkpoint_path=None):
     model = Solver.load_from_checkpoint(checkpoint_path, config=config)
-    transformer = ImageTransform()
 
-    for path in glob.glob(os.path.join(args.dir, '**/*.png'), recursive=True):
-        image, label = transformer(path)
-        idx, probs = model.infer(image.cuda())
-        print(f'{path} 推定: {idx} 確率: {probs}')
+    pattern = re.compile('convs.\d+.\d+.weight')
+
+    for key in model.model.state_dict().keys():
+        if pattern.match(key):
+            print(key)
     
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--config', type=str, required=True)
     parser.add_argument('--checkpoint', type=str, required=True)
-    parser.add_argument('--dir', type=str, required=True)
     args=parser.parse_args()
 
     torch.set_float32_matmul_precision('high')
