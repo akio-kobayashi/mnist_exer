@@ -35,6 +35,16 @@ class Solver(pl.LightningModule):
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), **self.config['optimizer'])
         return optimizer
+    
+    def infer(self, x):
+        if x.dim() == 3:
+            x = rearrange(x, '(b c) h w -> b c h w', b=1)
+        logits = self.forward(x)
+        probs = F.softmax(logits).detach().numpy()[0]
+
+        idx = torch.argmax(dim=-1).detach().numpy()
+
+        return idx, probs
 
 class LayerNorm(nn.Module):
     def __init__(self, size):
@@ -42,9 +52,9 @@ class LayerNorm(nn.Module):
         self.norm = nn.LayerNorm(size)
         
     def forward(self, x):
-        x = rearrange(x, 'b c w h -> b w h c')
+        x = rearrange(x, 'b c h w -> b h w c')
         x = self.norm(x)
-        return rearrange(x, 'b w h c -> b c w h')
+        return rearrange(x, 'b h w c -> b c h w')
     
 class mnistModel(nn.Module):
     def __init__(self, config):
@@ -75,6 +85,6 @@ class mnistModel(nn.Module):
     def forward(self, x):
         for block in self.convs:
             x = block(x)
-        x = rearrange(x, 'b c w h -> b (c w h)')
+        x = rearrange(x, 'b c h w -> b (c h w)')
         return self.feedforward(x)
     
