@@ -8,7 +8,7 @@ num_batch: 64
 trainer:
   accelerator: 'auto'
   accumulate_grad_batches: 5
-  max_epochs: 400
+  max_epochs: 20
   precision: '16-mixed'
   profiler: 'simple'
   gradient_clip_val: 5. 
@@ -23,7 +23,7 @@ checkpoint:
 logger:
   #save_dir: '/content/drive/MyDrive/'
   save_dir: './'
-  version: 2
+  version: 1
   name: 'lightning_logs'
 #mnist_save_dir: '/content/drive/MyDrive'
 mnist_save_dir: './'

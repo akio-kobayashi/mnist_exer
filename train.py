@@ -4,7 +4,7 @@ from lightning.pytorch.loggers import TensorBoardLogger
 import torch.utils.data as data
 from model import Solver
 import torch.utils.data as dat
-from digit_dataset import DigitDataset
+#from digit_dataset import DigitDataset
 from argparse import ArgumentParser
 import yaml
 import warnings
@@ -12,8 +12,9 @@ warnings.filterwarnings('ignore')
 from torchvision import datasets, transforms
 
 def main(config:dict, checkpoint_path=None):
-    model = Solver.load_from_checkpoint(checkpoint_path, config=config)
-
+    #model = Solver.load_from_checkpoint(checkpoint_path, config=config)
+    model = Solver(config)
+    
     # MNIST
     transform = transforms.Compose([
         transforms.ToTensor()
@@ -51,7 +52,8 @@ def main(config:dict, checkpoint_path=None):
     trainer = pl.Trainer( callbacks=callbacks,
                           logger=logger,
                           **config['trainer'] )
-    trainer.fit(model=model, train_dataloaders=train_dataloader,
+    trainer.fit(model=model, ckpt_path=args.checkpoint,
+                train_dataloaders=train_dataloader,
                 val_dataloaders=valid_dataloader)
     
 if __name__ == '__main__':

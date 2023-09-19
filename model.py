@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import pytorch_lightning as pl
 from einops import rearrange
 
-class Solver():
+class Solver(pl.LightningModule):
     def __init__(self, config):
         super().__init__()
         self.config=config
@@ -13,7 +13,7 @@ class Solver():
 
         self.save_hyperparameters()
 
-    def foward(self, x):
+    def forward(self, x):
         return self.model(x)
     
     def training_step(self, batch, batch_index):
@@ -35,6 +35,16 @@ class Solver():
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), **self.config['optimizer'])
         return optimizer
+
+class LayerNorm(nn.Module):
+    def __init__(self, size):
+        super().__init__()
+        self.norm = nn.LayerNorm(size)
+        
+    def forward(self, x):
+        x = rearrange(x, 'b c w h -> b w h c')
+        x = self.norm(x)
+        return rearrange(x, 'b w h c -> b c w h')
     
 class mnistModel(nn.Module):
     def __init__(self, config):
@@ -54,16 +64,17 @@ class mnistModel(nn.Module):
                           padding=config['kernel_size']//2
                           ),
                 nn.ReLU(),
-                nn.BatchNorm()
+                LayerNorm(out_channels)
             ]
             self.convs.append(nn.Sequential(*block))
             in_channels = out_channels
-            valid_width = int ( ( valid_width + 2*config['kernel_size']//2 - config['kernel_size'] ) / config['stride'] + 1 )
+            valid_width = int ( ( valid_width + 2*(config['kernel_size']//2) - config['kernel_size'] ) / config['stride'] + 1 )
 
         self.feedforward = nn.Linear(valid_width*valid_width*out_channels, 10)
 
     def forward(self, x):
-        x = self.convs(x)
-        x = rearrange(x, 'b c f -> b (c f)')
+        for block in self.convs:
+            x = block(x)
+        x = rearrange(x, 'b c w h -> b (c w h)')
         return self.feedforward(x)
     
