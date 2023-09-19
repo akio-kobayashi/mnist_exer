@@ -15,11 +15,12 @@ import glob
 
 class ImageTransform(nn.Module):
     def __init__(self):
-        self.transform = T.Compose(
-            T.GrayScale(),
+        super().__init__()
+        self.transform = T.Compose([
+            T.Grayscale(),
             T.Resize(28),
-            T.toTensor()
-        )
+            T.ToTensor()
+        ])
 
     def forward(self, path):
         image = Image.open(os.path.abspath(path))
@@ -36,13 +37,13 @@ class DigitDataset(torch.utils.data.Dataset):
             self.paths.append(os.path.abspath(path))
             lab = int(list(path.replace('.png', ''))[-1])
             assert lab >= 0 and lab <=9
-        self.transform = T.Compose(
-            T.GrayScale(), 
+        self.transform = T.Compose([
+            T.Grayscale(), 
             T.RandomHorizontalFlip(),
             T.RandomPerspective(),
             T.RandomRotation(10),
-            T.Resize(28), T.toTensor()
-        )
+            T.Resize(28), T.ToTensor()
+        ])
 
     def __len__(self):
         return len(self.paths)

@@ -40,9 +40,9 @@ class Solver(pl.LightningModule):
         if x.dim() == 3:
             x = rearrange(x, '(b c) h w -> b c h w', b=1)
         logits = self.forward(x)
-        probs = F.softmax(logits).detach().numpy()[0]
+        probs = F.softmax(logits).cpu().detach().numpy()[0]
 
-        idx = torch.argmax(dim=-1).detach().numpy()
+        idx = torch.argmax(logits, dim=-1).cpu().detach().numpy()
 
         return idx, probs
 

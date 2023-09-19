@@ -14,13 +14,15 @@ np.set_printoptions(precision=3, suppress=True)
 
 def main(config:dict, checkpoint_path=None):
     model = Solver.load_from_checkpoint(checkpoint_path, config=config)
-    transform = ImageTransform()
+    transformer = ImageTransform()
 
     for path in glob.glob(os.path.join(args.dir, '**/*.png'), recursive=True):
-        image, label = transform(path)
-        idx, probs = model.infer(image)
+        image, label = transformer(path)
+        idx, probs = model.infer(image.cuda())
         print(f'{path} 推定: {idx} 確率: {probs}')
-        
+
+    print(model.model.state_dict().keys())
+    
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument('--config', type=str, required=True)
@@ -32,4 +34,6 @@ if __name__ == '__main__':
     with open(args.config, 'r') as yf:
         config = yaml.safe_load(yf)
 
+    if 'config' in config.keys():
+        config = config['config']
     main(config, args.checkpoint)
