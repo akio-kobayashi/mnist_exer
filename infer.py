@@ -17,11 +17,17 @@ def main(config:dict, checkpoint_path=None):
     transformer = ImageTransform()
 
     results={}
+    num_correct = 0
+    num_test = 0
     for path in glob.glob(os.path.join(args.dir, '**/*.png'), recursive=True):
         image, label = transformer(path)
         idx, probs = model.infer(image.cuda())
         results[path] = {'index': idx, 'probs': probs}
-
+        if idx == label:
+            num_correct += 1
+        num_test += 1
+    rate = num_correct/num_test * 100.
+    print(f' {rate} %')
     results_sort = sorted(results.keys())
     for path in results_sort:
         print(f'{path} 推定: {results[path]["index"]} 確率: {results[path]["probs"]}')
