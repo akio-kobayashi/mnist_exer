@@ -1,6 +1,6 @@
 # conv2d parameters
 num_layers: 4
-kernel_size: 7
+kernel_size: 3
 stride: 1
 num_filters: 8
 #
@@ -24,6 +24,6 @@ logger:
   #save_dir: '/content/drive/MyDrive/'
   save_dir: './'
   version: 1
-  name: 'lightning_logs'
+  name: 'baseline'
 #mnist_save_dir: '/content/drive/MyDrive'
 mnist_save_dir: './'
