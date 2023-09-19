@@ -37,6 +37,7 @@ class DigitDataset(torch.utils.data.Dataset):
             self.paths.append(os.path.abspath(path))
             lab = int(list(path.replace('.png', ''))[-1])
             assert lab >= 0 and lab <=9
+            self.labels.append(lab)
         self.transform = T.Compose([
             T.Grayscale(), 
             T.RandomHorizontalFlip(),

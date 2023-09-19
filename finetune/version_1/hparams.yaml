@@ -1,0 +1,27 @@
+config:
+  checkpoint:
+    every_n_epochs: 1
+    filename: finetune
+    mode: min
+    monitor: valid_loss
+    save_last: true
+    save_top_k: 1
+  kernel_size: 7
+  logger:
+    name: finetune
+    save_dir: ./
+    version: 1
+  mnist_save_dir: ./
+  num_batch: 4
+  num_filters: 8
+  num_layers: 4
+  optimizer:
+    lr: 1.0e-06
+  stride: 1
+  trainer:
+    accelerator: auto
+    accumulate_grad_batches: 5
+    gradient_clip_val: 5.0
+    max_epochs: 100
+    precision: 16-mixed
+    profiler: simple
