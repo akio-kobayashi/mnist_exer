@@ -16,10 +16,15 @@ def main(config:dict, checkpoint_path=None):
     model = Solver.load_from_checkpoint(checkpoint_path, config=config)
     transformer = ImageTransform()
 
+    results={}
     for path in glob.glob(os.path.join(args.dir, '**/*.png'), recursive=True):
         image, label = transformer(path)
         idx, probs = model.infer(image.cuda())
-        print(f'{path} 推定: {idx} 確率: {probs}')
+        results[path] = {'index': idx, 'probs': probs}
+
+    results_sort = sorted(results.keys())
+    for path in results_sort:
+        print(f'{path} 推定: {results[path]["index"]} 確率: {results[path]["probs"]}')
     
 if __name__ == '__main__':
     parser = ArgumentParser()

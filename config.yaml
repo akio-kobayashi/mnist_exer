@@ -1,8 +1,8 @@
 # conv2d parameters
 num_layers: 4
-kernel_size: 3
+kernel_size: 7
 stride: 1
-num_filters: 4
+num_filters: 8
 #
 num_batch: 64
 trainer:
