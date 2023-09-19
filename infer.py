@@ -27,7 +27,7 @@ def main(config:dict, checkpoint_path=None):
             num_correct += 1
         num_test += 1
     rate = num_correct/num_test * 100.
-    print(f' {rate} %')
+    print(f'正解率: {rate} %')
     results_sort = sorted(results.keys())
     for path in results_sort:
         print(f'{path} 推定: {results[path]["index"]} 確率: {results[path]["probs"]}')
