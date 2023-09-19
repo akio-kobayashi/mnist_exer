@@ -1,0 +1,29 @@
+# conv2d parameters
+num_layers: 4
+kernel_size: 3
+stride: 1
+num_filters: 16
+#
+num_batch: 64
+trainer:
+  accelerator: 'auto'
+  accumulate_grad_batches: 5
+  max_epochs: 400
+  precision: '16-mixed'
+  profiler: 'simple'
+  gradient_clip_val: 5. 
+optimizer:
+  lr: 1.e-4  
+checkpoint:
+  monitor: 'valid_loss'
+  filename: 'checkpoint'
+  save_top_k: 1
+  mode: 'min'
+  every_n_epochs: 1
+logger:
+  #save_dir: '/content/drive/MyDrive/'
+  save_dir: './'
+  version: 2
+  name: 'lightning_logs'
+#mnist_save_dir: '/content/drive/MyDrive'
+mnist_save_dir: './'
