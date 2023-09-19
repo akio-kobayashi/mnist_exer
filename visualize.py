@@ -34,7 +34,7 @@ def main(config:dict, checkpoint_path=None):
                     for j in range(out_channels):
                         kw = np.array(kernel_weight[j, i, :, :]) #np.array(model.model.state_dict()[key])[i][j]#.reshape(kernel_size,kernel_size)
                         plt.subplot(in_channels, out_channels, i*out_channels+j+1)
-                        plt.title(f'フィルター係数 {num_layer} 層目 第 {i+1} フィルター')
+                        plt.title(f'{num_layer} 層目 第 {i*out_channels + j +1} フィルター')
                         plt.imshow(kw, cmap='gray')
                         outpath = os.path.join(save_dir, 'conv_'+ str(num_layer+1)+ '.png')
                         plt.savefig(outpath)
