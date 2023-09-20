@@ -12,14 +12,14 @@ import numpy as np
 
 np.set_printoptions(precision=3, suppress=True)
 
-def infer(config:dict, checkpoint_path=None):
-    model = Solver.load_from_checkpoint(checkpoint_path, config=config)
+def infer(config:dict, checkpoint_path=None, dirs):
+    model = Solver.load_from_checkpoint(checkpoint_path, strict=False, config=config)
     transformer = ImageTransform()
 
     results={}
     num_correct = 0
     num_test = 0
-    for path in glob.glob(os.path.join(args.dir, '**/*.png'), recursive=True):
+    for path in glob.glob(os.path.join(dirs, '**/*.png'), recursive=True):
         image, label = transformer(path)
         idx, probs = model.infer(image.cuda())
         results[path] = {'index': idx, 'probs': probs}
