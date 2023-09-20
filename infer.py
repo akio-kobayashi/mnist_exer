@@ -23,7 +23,7 @@ def ToDataframe(file, idx, probs):
         elif n == 1:
             item[n] = idx
         else:
-            item[n] = probs[n]
+            item[n] = probs[n-2]
     return pd.DataFrame(item)
 
 def infer(config:dict, checkpoint_path=None, dirs=None):
@@ -49,7 +49,6 @@ def infer(config:dict, checkpoint_path=None, dirs=None):
     rate = num_correct/num_test * 100.
     #print(f'正解率: {rate} %')
     html = df.to_html()
-    print(html)
     #results_sort = sorted(results.keys())
     #for path in results_sort:
     #    print(f'{path} 推定: {results[path]["index"]} 確率: {results[path]["probs"]}')
