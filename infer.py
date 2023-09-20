@@ -48,7 +48,8 @@ def infer(config:dict, checkpoint_path=None, dirs=None):
         num_test += 1
     rate = num_correct/num_test * 100.
     #print(f'正解率: {rate} %')
-    html = df.to_html
+    html = df.to_html()
+    print(html)
     #results_sort = sorted(results.keys())
     #for path in results_sort:
     #    print(f'{path} 推定: {results[path]["index"]} 確率: {results[path]["probs"]}')
