@@ -11,7 +11,7 @@ import warnings
 warnings.filterwarnings('ignore')
 from torchvision import datasets, transforms
 
-def main(config, checkpoint_path, train_datadir, valid_datadir):
+def finetune(config, checkpoint_path, train_datadir, valid_datadir):
     config['logger']['name'] = 'finetune'
     config['checkpoint']['filename'] = 'finetune'
     config['checkpoint']['save_last'] = True
@@ -65,4 +65,4 @@ if __name__ == '__main__':
     if 'config' in config.keys():
         config = config['config']
         
-    main(config, args.checkpoint, args.train_dir, args.valid_dir)
+    finetune(config, args.checkpoint, args.train_dir, args.valid_dir)

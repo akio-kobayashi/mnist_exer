@@ -14,7 +14,7 @@ import japanize_matplotlib
 
 np.set_printoptions(precision=3, suppress=True)
 
-def main(config:dict, checkpoint_path=None):
+def visualize(config:dict, checkpoint_path=None):
     model = Solver.load_from_checkpoint(checkpoint_path, config=config).cpu()
 
     out_channels = config['num_filters']
@@ -52,4 +52,4 @@ if __name__ == '__main__':
 
     if 'config' in config.keys():
         config = config['config']
-    main(config, args.checkpoint)
+    visualize(config, args.checkpoint)

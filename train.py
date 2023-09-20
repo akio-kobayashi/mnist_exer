@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 from torchvision import datasets, transforms
 from mnist_exer.model import Solver
 
-def main(config:dict, checkpoint_path=None):
+def train(config:dict, checkpoint_path=None):
     #model = Solver.load_from_checkpoint(checkpoint_path, config=config)
     model = Solver(config)
     
@@ -65,4 +65,4 @@ if __name__ == '__main__':
     with open(args.config, 'r') as yf:
         config = yaml.safe_load(yf)
 
-    main(config, args.checkpoint)
+    train(config, args.checkpoint)
