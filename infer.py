@@ -12,7 +12,7 @@ import numpy as np
 
 np.set_printoptions(precision=3, suppress=True)
 
-def infer(config:dict, checkpoint_path=None, dirs):
+def infer(config:dict, checkpoint_path=None, dirs=None):
     model = Solver.load_from_checkpoint(checkpoint_path, strict=False, config=config)
     transformer = ImageTransform()
 
