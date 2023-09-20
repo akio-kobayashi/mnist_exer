@@ -1,8 +1,8 @@
 # conv2d parameters
-num_layers: 4
+num_layers: 2
 kernel_size: 3
 stride: 1
-num_filters: 8
+num_filters: 4
 #
 num_batch: 64
 trainer:
@@ -10,7 +10,7 @@ trainer:
   accumulate_grad_batches: 5
   max_epochs: 20
   precision: '16-mixed'
-  profiler: 'simple'
+  profiler: False
   gradient_clip_val: 5. 
 optimizer:
   lr: 1.e-4  
