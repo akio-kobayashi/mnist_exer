@@ -40,7 +40,8 @@ def infer(config:dict, checkpoint_path=None, dirs=None):
         idx, probs = model.infer(image.cuda())
         print(len(probs.to_list()))
         #results[path] = {'index': idx, 'probs': probs}
-        df_line = ToDataframe(path, idx, probs)
+        #df_line = ToDataframe(path, idx, probs)
+        df_line = None
         if df is None:
             df = df_line
         else:
