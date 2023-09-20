@@ -38,6 +38,7 @@ def infer(config:dict, checkpoint_path=None, dirs=None):
     for path in glob.glob(os.path.join(dirs, '**/*.png'), recursive=True):
         image, label = transformer(path)
         idx, probs = model.infer(image.cuda())
+        print(len(probs.to_list()))
         #results[path] = {'index': idx, 'probs': probs}
         df_line = ToDataframe(path, idx, probs)
         if df is None:
