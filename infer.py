@@ -16,14 +16,15 @@ np.set_printoptions(precision=3, suppress=True)
 def ToDataframe(file, idx, probs):
     keys = ['file', 'infer', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     probs = probs.tolist()
+    print(len(probs))
     item = {}
     for n in range(len(keys)):
         if n == 0:
-            item[n] = file
+            item[keys[n]] = file
         elif n == 1:
-            item[n] = idx
+            item[keys[n]] = idx
         else:
-            item[n] = probs[n-2]
+            item[keys[n]] = probs[n-2]
     return pd.DataFrame(item)
 
 def infer(config:dict, checkpoint_path=None, dirs=None):
