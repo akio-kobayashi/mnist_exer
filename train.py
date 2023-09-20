@@ -51,7 +51,7 @@ def train(config:dict, checkpoint_path=None):
     trainer = pl.Trainer( callbacks=callbacks,
                           logger=logger,
                           **config['trainer'] )
-    trainer.fit(model=model, ckpt_path=args.checkpoint,
+    trainer.fit(model=model, ckpt_path=checkpoint_path,
                 train_dataloaders=train_dataloader,
                 val_dataloaders=valid_dataloader)
     
