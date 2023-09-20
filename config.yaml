@@ -21,9 +21,9 @@ checkpoint:
   mode: 'min'
   every_n_epochs: 1
 logger:
-  #save_dir: '/content/drive/MyDrive/'
-  save_dir: './'
+  save_dir: '/content/drive/MyDrive/'
+  #save_dir: './'
   version: 1
   name: 'baseline'
-#mnist_save_dir: '/content/drive/MyDrive'
-mnist_save_dir: './'
+mnist_save_dir: '/content/drive/MyDrive'
+#mnist_save_dir: './'

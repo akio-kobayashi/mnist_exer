@@ -2,9 +2,9 @@ import torch
 import pytorch_lightning as pl
 from lightning.pytorch.loggers import TensorBoardLogger
 import torch.utils.data as data
-from model import Solver
+from mnist_exer.model import Solver
 import torch.utils.data as dat
-from digit_dataset import DigitDataset
+from mnist_exer.digit_dataset import DigitDataset
 from argparse import ArgumentParser
 import yaml
 import warnings

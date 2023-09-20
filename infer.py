@@ -1,7 +1,7 @@
 import torch
 import pytorch_lightning as pl
-from model import Solver
-from digit_dataset import ImageTransform
+from mnist_exer.model import Solver
+from mnist_exer.digit_dataset import ImageTransform
 from argparse import ArgumentParser
 import yaml
 import warnings
